@@ -1,4 +1,9 @@
-import { PANEL_CLOSED, PANEL_OPENED } from '../actions';
+import {
+  PANEL_CLOSED,
+  PANEL_OPENED,
+  FAVOURITE_ADDED,
+  FAVOURITE_REMOVED,
+} from '../actions';
 
 const initialState = {
   isOpen: false,
@@ -18,6 +23,20 @@ export const favouritesReducer = (state = initialState, action) => {
       return {
         ...state,
         isOpen: false,
+      };
+    }
+
+    case FAVOURITE_ADDED: {
+      return {
+        ...state,
+        comics: [...state.comics, action.payload],
+      };
+    }
+
+    case FAVOURITE_REMOVED: {
+      return {
+        ...state,
+        comics: state.comics.filter((item) => item !== action.payload),
       };
     }
 

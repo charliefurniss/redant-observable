@@ -1,8 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { closeFavourites } from '../actions';
+import styled from 'styled-components';
 
-export const Favourites = ({ isOpen, closeFavourites }) => {
+import { closeFavourites, removeFavourite } from '../actions';
+
+export const Favourites = ({
+  isOpen,
+  closeFavourites,
+  favouriteComicIds,
+  comics,
+  removeFavourite,
+}) => {
   const panelClassName = isOpen ? 'favourites-panel open' : 'favourites-panel';
 
   return (
@@ -13,10 +21,20 @@ export const Favourites = ({ isOpen, closeFavourites }) => {
       </div>
       <div className='favourites-content'>
         <ul className='favourites-list'>
-          <li>
-            Comic name
-            <button className='remove js-remove' onClick={() => {}}></button>
-          </li>
+          {favouriteComicIds.map((id, index) => {
+            const [comic] = comics.filter((comic) => comic.id === id);
+            return (
+              <FavouriteContainer>
+                <StyledListItem key={index}>
+                  {comic.title}
+                  <button
+                    className='remove js-remove'
+                    onClick={() => removeFavourite(id)}
+                  ></button>
+                </StyledListItem>
+              </FavouriteContainer>
+            );
+          })}
         </ul>
       </div>
     </div>
@@ -26,7 +44,23 @@ export const Favourites = ({ isOpen, closeFavourites }) => {
 const mapStateToProps = (state) => {
   return {
     isOpen: state.favourites.isOpen,
+    favouriteComicIds: state.favourites.comics,
+    comics: state.comics.data,
   };
 };
 
-export default connect(mapStateToProps, { closeFavourites })(Favourites);
+export default connect(mapStateToProps, { closeFavourites, removeFavourite })(
+  Favourites
+);
+
+const FavouriteContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
+  width: 100%;
+`;
+
+const StyledListItem = styled.li`
+  display: block;
+  width: 100%;
+`;
