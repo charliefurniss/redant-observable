@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { connect } from 'react-redux';
 
-function App() {
+import './App.css';
+import ComicsList from './components/comicsList';
+
+function App({ app }) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className='App'>
+      <header className='site-header'>
+        <h1 className='site-heading'>Red Ant Comics</h1>
+        <button className='favourites-toggle js-favourites-toggle'></button>
       </header>
+
+      <main className='site-content'>
+        <ComicsList />
+      </main>
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    app: state.app,
+  };
+};
+
+export default connect(mapStateToProps)(App);
