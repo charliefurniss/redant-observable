@@ -26,8 +26,8 @@ export const ComicsList = (props) => {
       {loading && <p>Please wait...</p>}
       {!loading && (
         <ul className='comics-list'>
-          {comics.map((comic) => (
-            <Comic comic={comic} />
+          {comics.map((comic, index) => (
+            <Comic key={index} comic={comic} />
           ))}
         </ul>
       )}

@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 
-import { appReducer, comicsReducer } from './reducers';
+import { appReducer, comicsReducer, favouritesReducer } from './reducers';
 import { fetchComicsEpic } from './epics';
 
 export function configureStore() {
@@ -12,6 +12,7 @@ export function configureStore() {
   const rootReducer = combineReducers({
     app: appReducer,
     comics: comicsReducer,
+    favourites: favouritesReducer,
   });
 
   const composeEnhancers =

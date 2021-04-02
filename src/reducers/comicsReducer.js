@@ -6,7 +6,6 @@ const initialState = {
 };
 
 export function comicsReducer(state = initialState, action) {
-  console.log({ action });
   switch (action.type) {
     case FETCH_FULFILLED: {
       return { ...state, loading: false, data: action.payload };
